@@ -41,13 +41,18 @@ def app():
             city_choice = form.selectbox("Select a city you liked or live", city_list)
             submit = form.form_submit_button('check for silimar city')
             if submit:
-                liked_city = city_choice.split(',')[0]
-                user_input_cosine = CosineRecommendSimilar(liked_city) 
-                user_input_cosine.cosine_using_city_I_like()
-                user_input_cosine.decision_for_liked_city()
-                # st.success(f'The city that is most cimilar to the city you chose is {liked_city_closest}')
-                # st.subheader('Below are other similar cities and their scores out of 10')
-                # st.dataframe(other_close_cities_df)
+                with st.spinner("Analysing..."):
+                    time.sleep(2)
+                    liked_city = city_choice.split(',')[0]
+                    user_input_cosine = CosineRecommendSimilar(liked_city) 
+                    user_input_cosine.cosine_using_city_I_like()
+                    
+                    main_comment, side_comment = user_input_cosine.comment_for_closest_city()
+                    st.success(main_comment)
+                    st.write(side_comment)
+                    # user_input_cosine.properties_closest_city()
+                    user_input_cosine.info_other_similar_cities()
+                
 
         elif model_choice == 'look for certain parameters in a city':
             
@@ -68,12 +73,67 @@ def app():
                     
                     if submit:
                         if social:
-                            pass
+                            social_city_features = [ 'Nightlife Score', 'Beer Ranking',
+                                                    'Festival Ranking', 'Tourism Score']
+                            parameter_name = 'social'
+                            try:
+                                number = int(number)
+                                if number == 0:
+                                    st.warning('number must be greater than 0')
+                                elif number <= 100 :
+                                    user_input_feature2 = FeatureRecommendSimilar(social_city_features, number, parameter_name)
+                                    user_input_feature2.calculate_top_cities_for_defined_feature()
+                                    user_input_feature2.top_countries_based_on_selected_cities()
+                                    with st.spinner("Analysing..."):
+                                        time.sleep(2)
+                                        user_input_feature2.decision_for_user_defined_city()
+                                else:
+                                    st.warning('number must be less than 100')
+                            except ValueError:
+                                st.warning('that was not a valid number. try again')
                         elif business:
+                            business_city_features = ['Employment Score', 'Startup Score', 
+                                                    'Transport Score', 'Immigration Tolerence' ]
+                            parameter_name = 'business'
+                            try:
+                                number = int(number)
+                                if number == 0:
+                                    st.warning('number must be greater than 0')
+                                elif number <= 100 :
+                                    user_input_feature2 = FeatureRecommendSimilar(business_city_features , number, parameter_name)
+                                    user_input_feature2.calculate_top_cities_for_defined_feature()
+                                    user_input_feature2.top_countries_based_on_selected_cities()
+                                    with st.spinner("Analysing..."):
+                                        time.sleep(2)
+                                        user_input_feature2.decision_for_user_defined_city()
+                                else:
+                                    st.warning('number must be less than 100')
+                            except ValueError:
+                                st.warning('that was not a valid number. try again')
                             pass
                         else:
-                            female_friendly
-                
+                            femalefriendly_city_features = ['Access to Contraceptive Score', 
+                                                            'Gender Equality Score','Personal Freedom and Choice']
+                            parameter_name = 'female friendly'
+                            try:
+                                number = int(number)
+                                if number == 0:
+                                    st.warning('number must be greater than 0')
+                                elif number <= 100 :
+                                    user_input_feature2 = FeatureRecommendSimilar(femalefriendly_city_features , number, parameter_name)
+                                    user_input_feature2.calculate_top_cities_for_defined_feature()
+                                    user_input_feature2.top_countries_based_on_selected_cities()
+                                    with st.spinner("Analysing..."):
+                                        time.sleep(2)
+                                        user_input_feature2.decision_for_user_defined_city()
+                                else:
+                                    st.warning('number must be less than 100')
+                            except ValueError:
+                                st.warning('that was not a valid number. try again')
+                            
+                            
+                        
+  
                 
                 elif parameter_option == 'define your parmeter for a desired city':
                     st.subheader(' ')
@@ -101,7 +161,7 @@ def app():
                                     user_input_feature2.top_countries_based_on_selected_cities()
                                     with st.spinner("Analysing..."):
                                         time.sleep(2)
-                                        user_input_feature2.decision_for_personally_defined_city()
+                                        user_input_feature2.decision_for_user_defined_city()
                                 else:
                                     st.warning('number must be less than 100')
                             except ValueError:

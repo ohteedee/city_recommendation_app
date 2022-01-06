@@ -40,8 +40,11 @@ class FeatureRecommendSimilar:
         self.feature_countries_df_final = feature_countries_df.sort_values('score', ascending=False)
         return self.feature_countries_df_final
     
-    
-    def decision_for_personally_defined_city(self):
+    def decision_for_predefined_city_features(self):
+        """ fill later """
+        pass
+
+    def decision_for_user_defined_city(self):
         """ fill later """
 
         st.markdown('----------------------------------------------------------**Recommendation**----------------------------------------------------------')
@@ -56,5 +59,7 @@ class FeatureRecommendSimilar:
             st.table(top_countries.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Greens').set_properties(subset=['score'], **{'width': '250px'}))
         else:
             pass
+
+    
 
 
