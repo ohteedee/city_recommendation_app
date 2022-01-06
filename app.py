@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+import pandas as pd
 import time 
 from utils import  generate_city_list, get_feature_list
 from recommender import FeatureRecommendSimilar, CosineRecommendSimilar
@@ -106,15 +107,20 @@ def app():
                                     st.warning('number must be greater than 0')
                                 elif number <= 100 :
                                     user_input = FeatureRecommendSimilar(parameter_fearture, number)
-                                    top_similar_cities = user_input.calculate_top_cities_for_defined_feature()
+                                    first_city, top_similar_cities = user_input.calculate_top_cities_for_defined_feature()
+                                    final_city_df= pd.DataFrame.reset_index(top_similar_cities)
                                     with st.spinner("Analysing..."):
-                                        time.sleep(3)
+                                        time.sleep(2)
                                         st.markdown('--------------------------------------------**Recommendation**--------------------------------------------')
-                                        st.dataframe(top_similar_cities)
+                                        st.markdown(f'Based on your  parameter, **{first_city}** is the top recommended city to live or visit.')
+                                        st.markdown('--------------------------------------------**Additional info**--------------------------------------------')
+                                        st.markdown('Below are details of your top city and other similar ones')
+                                        st.table(final_city_df.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Blues').set_properties(subset=['score'], **{'width': '250px'}))
                                         top_countries =  user_input.top_countries_based_on_selected_cities()
                                         if len(top_similar_cities) != len(top_countries) :
-                                            st.write('below are the aggregate score of the countries represented in the list of your cities')
+                                            st.markdown('below are the aggregate score of the countries represented in the table of your cities')
                                             st.dataframe(top_countries)
+                                            st.table(final_city_df.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Blues').set_properties(subset=['score'], **{'width': '250px'}))
                                         else:
                                             pass
 
