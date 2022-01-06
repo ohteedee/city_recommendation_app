@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
-from utils import  generate_city_list
+import time 
+from utils import  generate_city_list, get_feature_list
 from recommender import FeatureRecommendSimilar, CosineRecommendSimilar
 
 
@@ -8,10 +9,10 @@ from recommender import FeatureRecommendSimilar, CosineRecommendSimilar
 
 
 
-# import time 
+
 # import numpy as np
 
-# from utils import load_data
+
 
 
 
@@ -61,20 +62,74 @@ def app():
             
             st.subheader(" ")
 
-            st.subheader('What parameter would you like to use to search for cities')
-            form = st.form(key='my-form')
-            social = form.checkbox('look for city with high social life')
-            business = form.checkbox('look for city with thriving business ecosystems')
-            female_friendly = form.checkbox('look for city that are female friendly')
-            number = form.text_input('type the number of cities you want to see here', value = 20)
-            submit = form.form_submit_button('seacrh for cities')
-            if submit:
-                if social:
-                    pass
-                elif business:
-                    pass
-                else:
-                    female_friendly
+            parameter_option = st.radio( 'please select one of the options',
+                                ('none','use a pre-defined parameter', 'define your parmeter for a desired city'))
+            if parameter_option != 'none':
+                if parameter_option == 'use a pre-defined parameter':
+                    st.subheader('What parameter would you like to use to search for cities')
+                    form = st.form(key='my-form')
+                    social = form.checkbox('look for city with high social life')
+                    business = form.checkbox('look for city with thriving business ecosystems')
+                    female_friendly = form.checkbox('look for city that are female friendly')
+                    number = form.text_input('type the number of cities you want to see here', value = 20)
+                    submit = form.form_submit_button('seacrh for cities')
+                    
+                    
+                    if submit:
+                        if social:
+                            pass
+                        elif business:
+                            pass
+                        else:
+                            female_friendly
+                
+                
+                elif parameter_option == 'define your parmeter for a desired city':
+                    st.subheader(' ')
+                    st.subheader('you can define your desired city with the form below')
+                    form = st.form(key='my-form')
+                    parameter_name = form.text_input('please type the name of parameter you would like to search (optional)' )
+                    list_of_features = get_feature_list()
+                    parameter_fearture = form.multiselect( 'select as many features that defines your desired city',  list_of_features)
+                    number = form.text_input('type the number of cities you want to see here', value = 20)
+                    submit = form.form_submit_button('seacrh for cities' )
+
+                    if submit:
+
+                        if parameter_fearture == []:
+                            st.warning('you must select an a city feature')
+                        else:
+                    
+                            try:
+                                number = int(number)
+                                if number == 0:
+                                    st.warning('number must be greater than 0')
+                                elif number <= 100 :
+                                    user_input = FeatureRecommendSimilar(parameter_fearture, number)
+                                    top_similar_cities = user_input.calculate_top_cities_for_defined_feature()
+                                    with st.spinner("Analysing..."):
+                                        time.sleep(3)
+                                        st.markdown('--------------------------------------------**Recommendation**--------------------------------------------')
+                                        st.dataframe(top_similar_cities)
+                                        top_countries =  user_input.top_countries_based_on_selected_cities()
+                                        if len(top_similar_cities) != len(top_countries) :
+                                            st.write('below are the aggregate score of the countries represented in the list of your cities')
+                                            st.dataframe(top_countries)
+                                        else:
+                                            pass
+
+                                else:
+                                    st.warning('number must be less than 100')
+                            except ValueError:
+                                st.warning('that was not a valid number. try again')
+
+                        
+
+
+                       
+
+
+                    
     
 
     # city_df, data, city_scores, location = load_data()
