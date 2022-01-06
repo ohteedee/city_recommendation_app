@@ -35,16 +35,22 @@ def app():
         st.image(img, use_column_width=True)
     
 
-        model_choice = st.radio('Please, select one of the options below',
-                                ('look for city similar you like or live', 'look for certain parameters in a city'))
+        model_choice = st.radio( ' Please, select one of the options below',
+                                ('none','look for city similar you like or live', 'look for certain parameters in a city'))
         
-        if model_choice == 'look for city similar to one I like':
-
+        if model_choice == 'none':
+            pass
+        
+        elif model_choice == 'look for city similar you like or live':
+            st.subheader(" ")
+            st.subheader('select a city ')
+            form = st.form(key='my-form')
             city_list = generate_city_list()
-            city_choice = st.selectbox("Select a city of you liked or live", (city_list))
-            if city_choice != "none":
+            city_list.append(' none')
+            city_choice = form.selectbox("Select a city you liked or live", city_list)
+            submit = form.form_submit_button('check for silimar city')
+            if submit:
                 liked_city = city_choice.split(',')[0]
-                
                 user_input = CosineRecommendSimilar(liked_city) 
                 liked_city_closest, other_close_cities_df = user_input.cosine_using_city_I_like()
                 st.success(f'The city that is most cimilar to the city you chose is {liked_city_closest}')
@@ -52,7 +58,23 @@ def app():
                 st.dataframe(other_close_cities_df)
 
         elif model_choice == 'look for certain parameters in a city':
-            pass
+            
+            st.subheader(" ")
+
+            st.subheader('What parameter would you like to use to search for cities')
+            form = st.form(key='my-form')
+            social = form.checkbox('look for city with high social life')
+            business = form.checkbox('look for city with thriving business ecosystems')
+            female_friendly = form.checkbox('look for city that are female friendly')
+            number = form.text_input('type the number of cities you want to see here', value = 20)
+            submit = form.form_submit_button('seacrh for cities')
+            if submit:
+                if social:
+                    pass
+                elif business:
+                    pass
+                else:
+                    female_friendly
     
 
     # city_df, data, city_scores, location = load_data()
