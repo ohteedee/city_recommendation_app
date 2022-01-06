@@ -3,19 +3,8 @@ from PIL import Image
 import pandas as pd
 import time 
 from utils import  generate_city_list, get_feature_list
-from recommender import FeatureRecommendSimilar, CosineRecommendSimilar
-
-
-
-
-
-
-
-# import numpy as np
-
-
-
-
+from recomenders.feature_recommender import FeatureRecommendSimilar
+from recomenders.cosine_recommender import CosineRecommendSimilar
 
 
 
@@ -53,11 +42,12 @@ def app():
             submit = form.form_submit_button('check for silimar city')
             if submit:
                 liked_city = city_choice.split(',')[0]
-                user_input = CosineRecommendSimilar(liked_city) 
-                liked_city_closest, other_close_cities_df = user_input.cosine_using_city_I_like()
-                st.success(f'The city that is most cimilar to the city you chose is {liked_city_closest}')
-                st.subheader('Below are other similar cities and their scores out of 10')
-                st.dataframe(other_close_cities_df)
+                user_input_cosine = CosineRecommendSimilar(liked_city) 
+                user_input_cosine.cosine_using_city_I_like()
+                user_input_cosine.decision_for_liked_city()
+                # st.success(f'The city that is most cimilar to the city you chose is {liked_city_closest}')
+                # st.subheader('Below are other similar cities and their scores out of 10')
+                # st.dataframe(other_close_cities_df)
 
         elif model_choice == 'look for certain parameters in a city':
             
@@ -87,7 +77,7 @@ def app():
                 
                 elif parameter_option == 'define your parmeter for a desired city':
                     st.subheader(' ')
-                    st.subheader('you can define your desired city with the form below')
+                    st.markdown('you can define your desired city with the form below')
                     form = st.form(key='my-form')
                     parameter_name = form.text_input('please type the name of parameter you would like to search (optional)' )
                     list_of_features = get_feature_list()
@@ -106,24 +96,12 @@ def app():
                                 if number == 0:
                                     st.warning('number must be greater than 0')
                                 elif number <= 100 :
-                                    user_input = FeatureRecommendSimilar(parameter_fearture, number)
-                                    first_city, top_similar_cities = user_input.calculate_top_cities_for_defined_feature()
-                                    final_city_df= pd.DataFrame.reset_index(top_similar_cities)
+                                    user_input_feature2 = FeatureRecommendSimilar(parameter_fearture, number, parameter_name)
+                                    user_input_feature2.calculate_top_cities_for_defined_feature()
+                                    user_input_feature2.top_countries_based_on_selected_cities()
                                     with st.spinner("Analysing..."):
                                         time.sleep(2)
-                                        st.markdown('--------------------------------------------**Recommendation**--------------------------------------------')
-                                        st.markdown(f'Based on your  parameter, **{first_city}** is the top recommended city to live or visit.')
-                                        st.markdown('--------------------------------------------**Additional info**--------------------------------------------')
-                                        st.markdown('Below are details of your top city and other similar ones')
-                                        st.table(final_city_df.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Blues').set_properties(subset=['score'], **{'width': '250px'}))
-                                        top_countries =  user_input.top_countries_based_on_selected_cities()
-                                        if len(top_similar_cities) != len(top_countries) :
-                                            st.markdown('below are the aggregate score of the countries represented in the table of your cities')
-                                            st.dataframe(top_countries)
-                                            st.table(final_city_df.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Blues').set_properties(subset=['score'], **{'width': '250px'}))
-                                        else:
-                                            pass
-
+                                        user_input_feature2.decision_for_personally_defined_city()
                                 else:
                                     st.warning('number must be less than 100')
                             except ValueError:
