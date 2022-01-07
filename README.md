@@ -2,6 +2,8 @@
 
 ![image](picture/city1.jpeg)
 
+<img src="picture/city1.jpeg" alt="city" width="200"/>
+
 ###### This is an app that can recommend city for people, especially millennials. 
 ###### It takes your current city or city you have visited before that you liked a lot and suggest another city. 
 
