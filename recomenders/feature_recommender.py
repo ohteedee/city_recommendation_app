@@ -42,15 +42,31 @@ class FeatureRecommendSimilar:
         return self.feature_countries_df_final
     
     def decision_for_predefined_city_features(self):
-        """ fill later """
+        """ This function makes recommenddation based on predefined parameters and calculated results"""
+
+        st.markdown('### **Recommendation**')
+        st.success(f'Based on your  parameter, **{self.first_city}** is the top recommended city to live or visit.')
+        st.write(f'The three features that was used to define {self.parameter_name} city are {self.city_features[0]}, {self.city_features[1]}, {self.city_features[2]}')
+        st.markdown('### **Additional info**')
+        st.markdown('Below are details of your top city and other similar ones. highest scores is 10')
+        final_city_df= pd.DataFrame.reset_index(self.top_cities_feature_df)
+        st.table(final_city_df.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Greens').set_properties(subset=['score'], **{'width': '250px'}))
+        top_countries = pd.DataFrame.reset_index(self.feature_countries_df_final) 
+        if len(self.top_cities_feature_df) != len(top_countries) :
+            st.markdown('below are the aggregate score of the countries represented in the table of your cities')
+            st.table(top_countries.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Greens').set_properties(subset=['score'], **{'width': '250px'}))
+        else:
+            pass
         pass
+        st.write(f" PS: you can also choose features to define your own city. To do this, pick the option 'define your parmeter for a desired' city above")
+        
 
     def decision_for_user_defined_city(self):
-        """ This function makes recommenddation based on all the calcluted results"""
+        """ This function makes recommenddation based on selected features and calculated results"""
 
-        st.markdown('----------------------------------------------------------**Recommendation**----------------------------------------------------------')
-        st.markdown(f'Based on your  parameter, **{self.first_city}** is the top recommended city to live or visit.')
-        st.markdown('------------------------------------------------------------**Additional info**------------------------------------------------------------')
+        st.markdown('### **Recommendation**')
+        st.success(f'Based on your  parameter, **{self.first_city}** is the top recommended city to live or visit.')
+        st.markdown('### **Additional info**')
         st.markdown('Below are details of your top city and other similar ones. highest scores is 10')
         final_city_df= pd.DataFrame.reset_index(self.top_cities_feature_df)
         st.table(final_city_df.style.format({'score':'{:17,.1f}'}).background_gradient(cmap='Greens').set_properties(subset=['score'], **{'width': '250px'}))
