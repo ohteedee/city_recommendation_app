@@ -1,4 +1,4 @@
-# city_recommendation_app
+# City_recommender_app
 
 <img src="picture/city1.jpeg" alt="city" width="2000"/>
 
@@ -12,8 +12,9 @@ The original data which I explored and used to generate the app can be found [he
 1. App looks for a city similar to one you like: 
 
 - The app looks at a sets of parameters for the city you picked and calculates the most similar city based on cosine similarity algorithm (a colloaborative filtering method). 
-In simple terms, it looks at a certain sets of parameters such as Employment Score, Startup Score, Tourism Score, Housing Score,Access to Contraceptive Score, Gender Equality Score etc and calulate the city that is most similar to the city you picked
-The parameters checked are 16 altogether. It also suggests additional cities that are also quite similar under additional info
+In simple terms, it looks at a certain sets of parameters such as Employment Score, Startup Score, Tourism Score, Housing Score,Access to Contraceptive Score, 
+Gender Equality Score etc and calulate the city that is most similar to the city you picked.The parameters checked are 16 altogether. 
+It also suggests additional cities that are also quite similar under additional info
 <br />
 2. App can also look for a city based on a defined parameter: 
 
@@ -21,20 +22,27 @@ The parameters checked are 16 altogether. It also suggests additional cities tha
 In this instance, the app will calculate the city with the highest score using your defined parameter.
 To show you an example, there are three predefined city feature but you can also define your own. 
 You can select one or more features that define your city.  
-For example, I defined a female friendly city with the following three features: Access to Contraceptive, Gender Equality, and Personal Freedom and Choice.
+For example, I defined a female friendly city with the following three features:
+ Access to Contraceptive, Gender Equality, and Personal Freedom and Choice.
 
-- Here is a complete list of all the 16 parameters: Food Ranking, Transport Score, Health Rank, Internet Speed Score, University Score, Access to Contraceptive Score, Gender Equality Score, Immigration Tolerence, Personal Freedom and Choice, LGBT friendly Score, Nightlife Score, Beer Ranking,  Festival Ranking , Employment Score, Startup Score, Tourism Score, Housing Score
+- Here is a complete list of all the 16 parameters: Food Ranking, Transport Score, Health Rank, 
+Internet Speed Score, University Score, Access to Contraceptive Score, Gender Equality Score, 
+Immigration Tolerence, Personal Freedom and Choice, LGBT friendly Score, Nightlife Score, 
+Beer Ranking,  Festival Ranking , Employment Score, Startup Score, Tourism Score, Housing Score
        
 
 ### Deployment 
 
-This app was built with streamlit and deployed on Heroku. you can see it in action [here](https://ohteedee-city-recommender.herokuapp.com/) 
+This app was built with streamlit and deployed on Heroku. 
+you can see it in action [here](https://ohteedee-city-recommender.herokuapp.com/) 
 
 ### Design approach
 
 I could have easily designed the app using only funtions but for several reasons, I decided to generate classes:
-The first is that there are several functions and this will get messy as they grow. It also will assist potential person that clones the repo to figure out what function belongs to what
-Lastly, since I plan to extend the work in future using other colaborative methods, it helps to organise by creating a different module for that method.
+The first is that there are several functions and this will get messy as they grow. 
+It also will assist potential person that clones the repo to figure out what function belongs to what
+Lastly, since I plan to extend the work in future using other colaborative methods, 
+it helps to organise by creating a different module for that method.
 
 ### Info about files in the repo for potential people that may want to clone
 
@@ -42,7 +50,9 @@ Lastly, since I plan to extend the work in future using other colaborative metho
 
 - The picture folder contains city picture used on the homepage of the app and in this README file
 
-- The recommender folder contains .py files. The __init__.py is needed to package the directory, the cosine_recommender contains class used for recommending similar city based on cosine similarity, and feature_recommender contains class used for recommending based on your feartures or parameters
+- The recommender folder contains .py files. The __init__.py is needed to package the directory, 
+the cosine_recommender contains code for deined class used for recommending similar city based on cosine similarity, 
+and feature_recommender contains code for deined class used for recommending based on your feartures or parameters
 
 - The roughwork_jupyter folder contains the inital rough work used to exlore the data and generate funtions 
 
