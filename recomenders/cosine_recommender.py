@@ -38,9 +38,6 @@ class CosineRecommendSimilar:
 
         
        
-        # city_features_and_scores['your city'] = city_features_and_scores[self.liked_city_closest]
-        
-        # st.table(city_features_and_scores.style.format({'your city':'{:17,.1f}'}).background_gradient(cmap='Greens').set_properties(subset=['your city'], **{'width': '250px'}))
 
         if self.liked_city_closest in city_df.city.head(5).values:
             side_comment = f"{self.liked_city_closest} is amoung the top 5 recommended cities by millennials in 2018"

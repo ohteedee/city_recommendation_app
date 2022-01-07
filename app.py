@@ -56,12 +56,13 @@ def app():
                         user_input_cosine.cosine_using_city_I_like()
                         
                         main_comment, side_comment  = user_input_cosine.comment_for_closest_city()
+                        st.markdown('### **Recommendation**')
                         st.success(main_comment)
+                        st.write(side_comment)
+                        st.markdown('### **Additional info**')
                         city_features_and_scores = user_input_cosine.properties_closest_city()
                         st.write('The table below shows the features that describes the recommended city. These feature are similar for your input city')
                         st.table(city_features_and_scores)
-                        st.write(side_comment)
-                        
                         user_input_cosine.info_other_similar_cities()
                 else:
                     st.error('please pick a city')
