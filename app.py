@@ -55,11 +55,12 @@ def app():
                         user_input_cosine = CosineRecommendSimilar(liked_city) 
                         user_input_cosine.cosine_using_city_I_like()
                         
-                        main_comment, side_comment, city_features_and_scores  = user_input_cosine.comment_for_closest_city()
+                        main_comment, side_comment  = user_input_cosine.comment_for_closest_city()
                         st.success(main_comment)
+                        city_features_and_scores = user_input_cosine.properties_closest_city()
                         st.table(city_features_and_scores)
                         st.write(side_comment)
-                        # user_input_cosine.properties_closest_city()
+                        
                         user_input_cosine.info_other_similar_cities()
                 else:
                     st.error('please pick a city')

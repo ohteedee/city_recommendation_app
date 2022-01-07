@@ -36,8 +36,7 @@ class CosineRecommendSimilar:
         
         main_comment = f'The city that is most similar to the city you chose is {self.liked_city_closest}'
 
-        city_features_and_scores = city_df.set_index('city').loc[self.liked_city_closest].drop( labels = ['Total', 'country' ])
-        city_features_and_scores = pd.DataFrame(city_features_and_scores)
+        
        
         # city_features_and_scores['your city'] = city_features_and_scores[self.liked_city_closest]
         
@@ -51,17 +50,18 @@ class CosineRecommendSimilar:
             side_comment = f"{self.liked_city_closest} is amoung the top 20 recommended cities by millennials in 2018"
         else:
            side_comment = f"{self.liked_city_closest} it is among  one of the  100 cities loved by  millennials in 2018"
-        return main_comment, side_comment, city_features_and_scores 
+        return main_comment, side_comment
        
         
 
-    # def properties_closest_city(self):
+    def properties_closest_city(self):
 
-    #     """ fill comments later"""
+        """ fill comments later"""
 
-    #     city_properties = city_df.loc[city_df['city'] ==  self.liked_city_closest].iloc[0]
-    #     city_properties = pd.DataFrame.reset_index(city_properties)
-    #     st.table(city_properties.style.format({'other_similar_citties':'{:17,.1f}'}).background_gradient(cmap='Greens').set_properties(subset=['other_similar_citties'], **{'width': '250px'}))
+        city_features_and_scores = city_df.set_index('city').loc[self.liked_city_closest].drop( labels = ['Total', 'country' ])
+        city_features_and_scores = pd.DataFrame(city_features_and_scores)
+        
+        return city_features_and_scores
 
         
     
