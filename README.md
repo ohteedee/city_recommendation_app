@@ -2,7 +2,7 @@
 
 ![image](picture/city1.jpeg)
 
-<img src="picture/city1.jpeg" alt="city" width="200"/>
+<img src="picture/city1.jpeg" alt="city" width="2000"/>
 
 ###### This is an app that can recommend city for people, especially millennials. 
 ###### It takes your current city or city you have visited before that you liked a lot and suggest another city. 
@@ -17,14 +17,8 @@
         To show you an example, there are three predefined city feature but you can also define your own 
         you can select one or more features that define your city.  for example, I defined a female friendly city as a city with Access to Contraceptive Score, Gender Equality Score and Personal Freedom and Choice
 
-###### Here is a complete list of all the 16 parameters: Food Ranking, Transport Score, Health Rank, Internet Speed Score, University Score, Access to Contraceptive Score, Gender Equality Score, Immigration Tolerence, Personal Freedom and Choice,
-######  LGBT friendly Score, Nightlife Score, Beer Ranking,  Festival Ranking , Employment Score, Startup Score, Tourism Score, Housing Score
+###### Here is a complete list of all the 16 parameters: Food Ranking, Transport Score, Health Rank, Internet Speed Score, University Score, Access to Contraceptive Score, Gender Equality Score, Immigration Tolerence, Personal Freedom and Choice, LGBT friendly Score, Nightlife Score, Beer Ranking,  Festival Ranking , Employment Score, Startup Score, Tourism Score, Housing Score
        
-
-### deployment 
-
-you can see this app in action in the URL below
-
 
 ### deployment 
 =======
