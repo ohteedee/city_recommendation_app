@@ -8,7 +8,7 @@ import streamlit as st
 
 
 class FeatureRecommendSimilar:
-    """ fill later """
+    """ contains all methods and and attributes needed for recommend using defined feature parameteres """
     
     def __init__(self, city_features: list, number: int, parameter_name) -> None:
         self.city_features = city_features
@@ -20,7 +20,8 @@ class FeatureRecommendSimilar:
         pass
 
     def calculate_top_cities_for_defined_feature(self):
-        """ fill later """
+        """ function that calculates the cities with the highest score with defined parameters.
+        It returns: the top city, and a dataframe that contain other cities with similar scores"""
         
         needed_columns = ['city', 'country']
         self.city_features.extend(needed_columns)
@@ -33,8 +34,8 @@ class FeatureRecommendSimilar:
         return self.first_city, self.top_cities_feature_df
 
     
-    def top_countries_based_on_selected_cities(self):
-        """ fill later """
+    def aggregate_top_countries(self):
+        """ this function gets the aggregate score of all the counties represented in the dataframe  of top cities (self.top_cities_feature_df) """
         feature_countries_df= self.top_cities_feature_df.loc[:, ['country', 'score']]
         feature_countries_df = feature_countries_df.groupby('country').mean()
         self.feature_countries_df_final = feature_countries_df.sort_values('score', ascending=False)
@@ -45,7 +46,7 @@ class FeatureRecommendSimilar:
         pass
 
     def decision_for_user_defined_city(self):
-        """ fill later """
+        """ This function makes recommenddation based on all the calcluted results"""
 
         st.markdown('----------------------------------------------------------**Recommendation**----------------------------------------------------------')
         st.markdown(f'Based on your  parameter, **{self.first_city}** is the top recommended city to live or visit.')

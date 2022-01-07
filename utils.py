@@ -4,7 +4,7 @@ import pandas as pd
 city_df = pd.read_csv('data/city_ranking.csv')
 
 def generate_city_list():
-    """ fill later """
+    """ This funtion generates the list of city, country fron dataframe city_df  """
     
     location = []
     for index, city, country in city_df[["city", "country"]].sort_values("city").itertuples():
@@ -13,11 +13,11 @@ def generate_city_list():
     return location 
 
 def get_feature_list():
-    """ fill later """
+    """ This funtion generates the list of all the features used to describe city in dataframe city_df  """
 
-    list1 = city_df.columns
-    feature_list = list1[2:-1]
+    feature_list = city_df.columns[2:-1]
     return feature_list
+
 
 
 

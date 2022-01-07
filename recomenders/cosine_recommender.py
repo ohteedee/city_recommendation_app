@@ -6,7 +6,7 @@ import streamlit as st
 
 
 class CosineRecommendSimilar:
-    """ fill later """
+    """ get the top cities similar to input using cosine similarity """
     
     def __init__(self,liked_city: str) -> None:
      
@@ -17,7 +17,8 @@ class CosineRecommendSimilar:
 
     def cosine_using_city_I_like(self):
 
-        """ fill later """
+        """ this function generates the closest city to the city selected by the user using cosine similarity
+        It return: the top city, and other city with similar scores """
 
         vector_df =city_df.set_index('city').drop(columns = ['country', 'Total'])
         similarity = cosine_similarity(vector_df)
@@ -31,7 +32,7 @@ class CosineRecommendSimilar:
 
 
     def comment_for_closest_city(self):
-        """ fill info later """
+        """ This function generates the main comment/recommendation and alsoe give additional information about the top city """
         
         main_comment = f'The city that is most similar to the city you chose is {self.liked_city_closest}'
 
@@ -59,7 +60,7 @@ class CosineRecommendSimilar:
     
     def info_other_similar_cities(self):
 
-        """ fill comments later"""
+        """ this function gives user additional information about other cities which are similar to the top city"""
 
         st.markdown('Below are other similar cities and their scores out of 0 to 1. 1 being the highest')
         self.other_close_cities_df = pd.DataFrame.reset_index(self.other_close_cities_df)
