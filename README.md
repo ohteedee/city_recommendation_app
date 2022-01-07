@@ -16,6 +16,7 @@ In simple terms, it looks at a certain sets of parameters such as Employment Sco
 Gender Equality Score etc and calulate the city that is most similar to the city you picked.The parameters checked are 16 altogether. 
 It also suggests additional cities that are also quite similar under additional info
 <br />
+
 2. App can also look for a city based on a defined parameter: 
 
 - If all the 16 features used in option 1 are not important to you but only care about a few subsets, you can define your own parameters. 
