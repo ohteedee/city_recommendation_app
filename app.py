@@ -11,8 +11,6 @@ from recomenders.cosine_recommender import CosineRecommendSimilar
 def app():
     """ This is the main funtion for the application"""
 
-    st.write(st.config.get_option("server.enableCORS"))
-
     navigation = st.sidebar.radio('contents', ('main app', 'about'))
 
     st.sidebar.write('app designed by Tosin D. Oyewale (Ph.D)')
