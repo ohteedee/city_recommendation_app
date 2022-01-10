@@ -11,6 +11,8 @@ from recomenders.cosine_recommender import CosineRecommendSimilar
 def app():
     """ This is the main funtion for the application"""
 
+    st.write(st.config.get_option("server.enableCORS"))
+
     navigation = st.sidebar.radio('contents', ('main app', 'about'))
 
     st.sidebar.write('app designed by Tosin D. Oyewale (Ph.D)')
@@ -33,7 +35,10 @@ def app():
         st.markdown(html_code, unsafe_allow_html=True)
     
         model_choice = st.radio( 'Please, select one of the options below',
-                                ('none','look for city similar to the one you like or live', 'look for certain parameters in a city'))
+                                ('none',
+                                'look for city similar to the one you like or live', 
+                                'look for certain parameters in a city')
+                                )
         
         if model_choice == 'none':
             pass
@@ -46,28 +51,25 @@ def app():
             city_list.insert(0, 'none')
             city_choice = form.selectbox("Select a city you liked or live", city_list)
             submit = form.form_submit_button('check for a silimar city')
-            if submit:
-                if city_choice != 'none':
-                    with st.spinner("Analysing..."):
-                        time.sleep(2)
-                        liked_city = city_choice.split(',')[0]
-                        user_input_cosine = CosineRecommendSimilar(liked_city) 
-                        user_input_cosine.cosine_using_city_I_like()
-                        
-                        main_comment, side_comment  = user_input_cosine.comment_for_closest_city()
-                        st.markdown('### **Recommendation**')
-                        st.success(main_comment)
-                        st.write(side_comment)
-                        st.markdown('### **Additional info**')
-                        city_features_and_scores = user_input_cosine.properties_closest_city()
-                        st.write('The table below shows the features that describes the recommended city. These feature are similar for your input city')
-                        st.table(city_features_and_scores)
-                        user_input_cosine.info_other_similar_cities()
-                else:
-                    st.error('please pick a city')
+            if submit and city_choice != 'none':
+                with st.spinner("Analysing..."):
+                    time.sleep(2)
+                    liked_city = city_choice.split(',')[0]
+                    user_input_cosine = CosineRecommendSimilar(liked_city) 
+                    user_input_cosine.cosine_using_city_I_like()
+                    
+                    main_comment, side_comment  = user_input_cosine.comment_for_closest_city()
+                    st.markdown('### **Recommendation**')
+                    st.success(main_comment)
+                    st.write(side_comment)
+                    st.markdown('### **Additional info**')
+                    city_features_and_scores = user_input_cosine.properties_closest_city()
+                    st.write('The table below shows the features that describes the recommended city. These feature are similar for your input city')
+                    st.table(city_features_and_scores)
+                    user_input_cosine.info_other_similar_cities()
+            else:
+                st.error('please pick a city')
                 
-
-
 
         elif model_choice == 'look for certain parameters in a city':
             st.subheader(" ")
@@ -77,79 +79,69 @@ def app():
 
 
                 if parameter_option == 'use a pre-defined parameter':
-                    st.subheader('What parameter would you like to use to search for cities')
                     form = st.form(key='my-form')
-                    social = form.checkbox('look for city with high social life')
-                    business = form.checkbox('look for city with thriving business ecosystems')
-                    female_friendly = form.checkbox('look for city that are female friendly')
+                    city_option = form.selectbox('What parameter would you like to use to search for cities',
+                                                ('none', 
+                                                'look for city with high social life', 
+                                                'look for city with thriving business ecosystems', 
+                                                'look for city that are female friendly') 
+                                                )
                     number = form.text_input('type the number of cities you want to see here', value = 5)
                     submit = form.form_submit_button('search for cities')                    
-                    if submit:
-                        if (business and female_friendly) or (business and social) or (female_friendly and social) or (business and female_friendly and social):
-                            st.error('you can only select one parameter')
-                        elif social or female_friendly or business:
-                            if social:
-                                social_city_features = ['Nightlife Score', 'Beer Ranking',
-                                                        'Festival Ranking']
-                                parameter_name = 'social'
-                                try:
-                                    number = int(number)
-                                    if number == 0:
-                                        st.warning('number must be greater than 0')
-                                    elif number <= 100 :
-                                        user_input_feature2 = FeatureRecommendSimilar(social_city_features, number, parameter_name)
-                                        user_input_feature2.calculate_top_cities_for_defined_feature()
-                                        user_input_feature2.aggregate_top_countries()
-                                        with st.spinner("Analysing..."):
-                                            time.sleep(2)
-                                            user_input_feature2.decision_for_predefined_city_features()
-                                    else:
-                                        st.error('number must be less than 100')
-                                except ValueError:
-                                    st.error('that was not a valid number. try again')
-                            elif business:
-                                business_city_features = ['Employment Score', 'Startup Score', 
-                                                         'Immigration Tolerence' ]
-                                parameter_name = 'thriving business'
-                                try:
-                                    number = int(number)
-                                    if number == 0:
-                                        st.error('number must be greater than 0')
-                                    elif number <= 100 :
-                                        user_input_feature2 = FeatureRecommendSimilar(business_city_features , number, parameter_name)
-                                        user_input_feature2.calculate_top_cities_for_defined_feature()
-                                        user_input_feature2.aggregate_top_countries()
-                                        with st.spinner("Analysing..."):
-                                            time.sleep(2)
-                                            user_input_feature2.decision_for_predefined_city_features()
-                                    else:
-                                        st.warning('number must be less than 100')
-                                except ValueError:
-                                    st.warning('that was not a valid number. try again')
-                                pass
-                            elif female_friendly:
-                                femalefriendly_city_features = ['Access to Contraceptive Score', 
-                                                                'Gender Equality Score','Personal Freedom and Choice']
-                                parameter_name = 'female friendly'
-                                try:
-                                    number = int(number)
-                                    if number == 0:
-                                        st.warning('number must be greater than 0')
-                                    elif number <= 100 :
-                                        user_input_feature2 = FeatureRecommendSimilar(femalefriendly_city_features , number, parameter_name)
-                                        user_input_feature2.calculate_top_cities_for_defined_feature()
-                                        user_input_feature2.aggregate_top_countries()
-                                        with st.spinner("Analysing..."):
-                                            time.sleep(2)
-                                            user_input_feature2.decision_for_predefined_city_features()
-                                    else:
-                                        st.warning('number must be less than 100')
-                                except ValueError:
-                                    st.warning('that was not a valid number. try again')
-                        else:
-                            st.error('please select one parameter')
+                    if submit and city_option != 'none':
+
+                        def social():
+                            city_features = ['Nightlife Score', 
+                                            'Beer Ranking',
+                                            'Festival Ranking']
+                            parameter_name = 'social'
+                            
+                            return city_features, parameter_name
+
+
+                        def business():
+                            city_features = ['Employment Score', 
+                                            'Startup Score', 
+                                            'Immigration Tolerence' ]
+
+                            parameter_name = 'thriving business'
+                            return city_features, parameter_name 
                         
+
+                        def female_friendly():
+                            city_features = ['Access to Contraceptive Score', 
+                                            'Gender Equality Score',
+                                            'Personal Freedom and Choice']
+                            parameter_name = 'female friendly'
+                            return city_features , parameter_name 
+                        
+
+                        options = { 'look for city with high social life' :  social(),
+                                    'look for city with thriving business ecosystems' : business(),
+                                    'look for city that are female friendly' : female_friendly(),
+                                    }
+
+                        city_features,  parameter_name = options.get(city_option)
+                        
+                        try:
+                            number = int(number)
+                            if number == 0:
+                                st.warning('number must be greater than 0')
+                            elif number <= 100 :
+                                user_input_feature2 = FeatureRecommendSimilar(city_features, number, parameter_name)
+                                user_input_feature2.calculate_top_cities_for_defined_feature()
+                                user_input_feature2.aggregate_top_countries()
+                                with st.spinner("Analysing..."):
+                                    time.sleep(2)
+                                    user_input_feature2.decision_for_predefined_city_features()
+                            else:
+                                st.error('number must be less than 100')
+                        except ValueError:
+                            st.error('that was not a valid number. try again')
+                    else:
+                        st.error('please pick a parameter')    
   
+                
                 
                 elif parameter_option == 'define your parmeter for a desired city':
                     st.subheader(' ')
