@@ -5,7 +5,7 @@ from utils import  generate_city_list, get_feature_list
 from recomenders.feature_recommender import FeatureRecommendSimilar
 from recomenders.cosine_recommender import CosineRecommendSimilar
 
-
+# st.config.get_option("server.enableCORS")
 
 # The app controller
 def app():

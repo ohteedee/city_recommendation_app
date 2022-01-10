@@ -28,9 +28,8 @@ class FeatureRecommendSimilar:
         feature_df = city_df.loc[:, self.city_features]
         feature_df.set_index('city', inplace = True)
         feature_df['score'] = feature_df.mean(axis=1)
-        city_feature_df = feature_df.sort_values('score', ascending = False)
-        self.first_city = city_feature_df.score.idxmax()
-        self.top_cities_feature_df = city_feature_df.loc[:, ['country','score']].head(self.number)
+        self.first_city = feature_df.score.idxmax()
+        self.top_cities_feature_df = feature_df.loc[:, ['country','score']].nlargest(self.number, 'score')
         return self.first_city, self.top_cities_feature_df
 
     
@@ -65,7 +64,10 @@ class FeatureRecommendSimilar:
         """ This function makes recommenddation based on selected features and calculated results"""
 
         st.markdown('### **Recommendation**')
-        st.success(f'Based on your  parameter, **{self.first_city}** is the top recommended city to live or visit.')
+        if self.parameter_name != '':
+            st.success(f'Based on your  parameter ({self.parameter_name}), **{self.first_city}** is the top recommended city to live or visit.')
+        else:
+            st.success(f'Based on your  parameter, **{self.first_city}** is the top recommended city to live or visit.')
         st.markdown('### **Additional info**')
         st.markdown('Below are details of your top city and other similar ones. highest scores is 10')
         final_city_df= pd.DataFrame.reset_index(self.top_cities_feature_df)
