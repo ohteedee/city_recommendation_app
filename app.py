@@ -233,10 +233,10 @@ def app():
 
         '### Design approach'
         st.markdown(
-        'I could have easily designed the app using only funtions but for several reasons, I decided to generate classes:'
-        'The first is that there are several functions and this will get messy as they grow.'
-        'It also will assist potential person that clones the repo to figure out what function belongs to what'
-        'Lastly, since I plan to extend the work in future using other colaborative methods,' 
+        'I could have easily designed the app using only funtions but for several reasons, I decided to generate classes: '
+        'The first is that there are several functions and this will get messy as they grow. '
+        'It also will assist potential person that clones the repo to figure out what function belongs to what. '
+        'Lastly, since I plan to extend the work in future using other colaborative methods, ' 
         'it helps to organise by creating a different module for that method')
   
     
