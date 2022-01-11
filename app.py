@@ -33,9 +33,11 @@ def app():
         st.markdown(html_code, unsafe_allow_html=True)
     
         model_choice = st.radio( 'Please, select one of the options below',
-                                ('none',
+                            (
+                                'none',
                                 'look for city similar to the one you like or live', 
-                                'look for certain parameters in a city')
+                                'look for certain parameters in a city'
+                            )
                                 )
         
         if model_choice == 'none':
@@ -73,17 +75,24 @@ def app():
         elif model_choice == 'look for certain parameters in a city':
             st.subheader(" ")
             parameter_option = st.radio( 'please select one of the options',
-                                ('none','use a pre-defined parameter', 'define your parmeter for a desired city'))
+                                    (
+                                        'none',
+                                        'use a pre-defined parameter', 
+                                        'define your parmeter for a desired city'
+                                    )
+                                        )
             if parameter_option != 'none':
 
 
                 if parameter_option == 'use a pre-defined parameter':
                     form = st.form(key='my-form')
                     city_option = form.selectbox('What parameter would you like to use to search for cities',
-                                                ('none', 
-                                                'look for city with high social life', 
-                                                'look for city with thriving business ecosystems', 
-                                                'look for city that are female friendly') 
+                                        (
+                                            'none', 
+                                            'look for city with high social life', 
+                                            'look for city with thriving business ecosystems', 
+                                            'look for city that are female friendly'
+                                        ) 
                                                 )
                     number = form.text_input('type the number of cities you want to see here', value = 5)
                     submit = form.form_submit_button('search for cities')                    
@@ -92,34 +101,41 @@ def app():
                         if city_option != 'none':
 
                             def social():
-                                city_features = ['Nightlife Score', 
-                                                'Beer Ranking',
-                                                'Festival Ranking']
+                                city_features = [
+                                                    'Nightlife Score', 
+                                                    'Beer Ranking',
+                                                    'Festival Ranking'
+                                                ]
                                 parameter_name = 'social'
                                 
                                 return city_features, parameter_name
 
 
                             def business():
-                                city_features = ['Employment Score', 
-                                                'Startup Score', 
-                                                'Immigration Tolerence' ]
+                                city_features = [
+                                                    'Employment Score', 
+                                                    'Startup Score', 
+                                                    'Immigration Tolerence' 
+                                                ]
 
                                 parameter_name = 'thriving business'
                                 return city_features, parameter_name 
                             
 
                             def female_friendly():
-                                city_features = ['Access to Contraceptive Score', 
-                                                'Gender Equality Score',
-                                                'Personal Freedom and Choice']
+                                city_features = [
+                                                    'Access to Contraceptive Score', 
+                                                    'Gender Equality Score',
+                                                    'Personal Freedom and Choice'
+                                                ]
                                 parameter_name = 'female friendly'
                                 return city_features , parameter_name 
                             
 
-                            options = { 'look for city with high social life' :  social(),
-                                        'look for city with thriving business ecosystems' : business(),
-                                        'look for city that are female friendly' : female_friendly(),
+                            options =   { 
+                                            'look for city with high social life' :  social(),
+                                            'look for city with thriving business ecosystems' : business(),
+                                            'look for city that are female friendly' : female_friendly(),
                                         }
 
                             city_features,  parameter_name = options.get(city_option)
@@ -143,7 +159,6 @@ def app():
                             st.error('please pick a parameter')    
   
                 
-
                 elif parameter_option == 'define your parmeter for a desired city':
                     st.subheader(' ')
                     st.markdown('you can define your desired city with the form below')
