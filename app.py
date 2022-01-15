@@ -9,7 +9,9 @@ from recomenders.cosine_recommender import CosineRecommendSimilar
 
 # The app controller
 def app():
-    """ This is the main funtion for the application"""
+    """ This is the main scripts for the application."""
+
+# this section control the navigation of the app at the side bar. 
 
     navigation = st.sidebar.radio('contents', ('main app', 'about'))
 
@@ -17,8 +19,10 @@ def app():
     st.sidebar.write('Linkedin - https://www.linkedin.com/in/tosin-oyewale/')
     st.sidebar.write('email- tosinoyewale@yahoo.co.uk')
 
+
+# this section controls the main app. 
     if navigation == 'main app':
-        st.title("ohteedee city recommender app")
+        st.title("city recommender app")
         img= Image.open('picture/city1.jpeg')
         st.image(img, use_column_width=True)
 
@@ -42,6 +46,9 @@ def app():
         
         if model_choice == 'none':
             pass
+
+        # this aspect implements a cosine_similarity algorithim, using a class, to fine similar city to the one picked by user
+        # In theory, there are several clustering algorithms that I could use but I decided to stick to one for the sake of simplicity . 
         
         elif model_choice == 'look for city similar to the one you like or live':
             st.subheader(" ")
@@ -71,7 +78,11 @@ def app():
                 else:
                     st.error('please pick a city')
                 
-
+        
+        # This section contains code that allows the user to use just features. 
+        # users can either use a predefined feature or define their own. 
+        # I used aggregation to look for city which has the highest scores for the features selected or defined by the users
+        
         elif model_choice == 'look for certain parameters in a city':
             st.subheader(" ")
             parameter_option = st.radio( 'please select one of the options',
@@ -99,7 +110,9 @@ def app():
                     if submit:
 
                         if city_option != 'none':
-
+                        
+                        # instead of writing this section three times and make the code complicated, 
+                        # I decided to use dicitonary to access the variables 
                             def social():
                                 city_features = [
                                                     'Nightlife Score', 
@@ -191,8 +204,9 @@ def app():
                             except ValueError:
                                 st.warning('that was not a valid number. try again')
 
-                        
 
+                        
+# this sections control the section of the app that talks about the app. It is called 'about'
     elif navigation == 'about':
         # st.components.v1.html(html, width=None, height=None, scrolling=False)
         html_code = """
