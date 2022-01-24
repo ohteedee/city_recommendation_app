@@ -57,7 +57,7 @@ and feature_recommender contains code for deined class used for recommending bas
 
 - The roughwork_jupyter folder contains the inital rough work used to exlore the data and generate funtions 
 
-- The ''' app.py ''' file is the main file that powers the application and ''' util.py ''' contains code that are needed to load file and generate needed lists.
+- The '''app.py''' file is the main file that powers the application and ''' util.py ''' contains code that are needed to load file and generate needed lists.
 
 - The setup.sh and Procfile are needed for deployement on Heroku while the requirement.txt contains list of all the libraries used in the app. it is also needed for deployment.
 
