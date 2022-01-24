@@ -51,15 +51,15 @@ it helps to organise by creating a different module for that method.
 
 - The picture folder contains city picture used on the homepage of the app and in this README file
 
-- The recommender folder contains .py files. The __init__.py is needed to package the directory, 
-the cosine_recommender contains code for deined class used for recommending similar city based on cosine similarity, 
-and feature_recommender contains code for deined class used for recommending based on your feartures or parameters
+- The recommender folder contains .py files. The ```__init__.py``` file is needed to package the directory, 
+the ```cosine_recommender.py``` file contains code for deined class used for recommending similar city based on cosine similarity, 
+and ```feature_recommender``` contains code for deined class used for recommending based on your feartures or parameters
 
 - The roughwork_jupyter folder contains the inital rough work used to exlore the data and generate funtions 
 
-- The '''app.py''' file is the main file that powers the application and ''' util.py ''' contains code that are needed to load file and generate needed lists.
+- The ```app.py ```file is the main file that powers the application and ```util.py``` file contains code that are needed to load file and generate needed lists.
 
-- The setup.sh and Procfile are needed for deployement on Heroku while the requirement.txt contains list of all the libraries used in the app. it is also needed for deployment.
+- The ```setup.sh``` and ```Procfile``` files are needed for deployement on Heroku while the ```requirement.txt``` contains list of all the libraries used in the app. it is also needed for deployment.
 
 
 ### Replication of work
